@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbca807lncvdt"]
+
+[ext_resource type="PackedScene" uid="uid://cxtsndussnvpj" path="res://NPCEnemy/npc_enemy.tscn" id="1_l2m72"]
+[ext_resource type="PackedScene" uid="uid://dng36kjbavatw" path="res://PlayableCharacter/playable_character.tscn" id="2_l2m72"]
+
+[node name="Pit" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="NPCEnemy" parent="." instance=ExtResource("1_l2m72")]
+
+[node name="PlayerVisuals" parent="." instance=ExtResource("2_l2m72")]
+position = Vector2(-274, -20)
