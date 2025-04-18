@@ -40,7 +40,6 @@ func _process(delta: float) -> void:
 			character.play_hurt()
 		State.ATTACKING:
 			character.play_basic_attack(selected_target)
-			character.stop_moving()
 		State.DYING:
 			character.play_death()
 			set_process(false)
@@ -48,6 +47,7 @@ func _process(delta: float) -> void:
 			character_dead = true
 
 func _on_hurtbox_damage_taken(damage) -> void:
+	character.stop_animation()
 	if current_state != State.HURT:
 		previous_state = current_state
 	
@@ -55,6 +55,7 @@ func _on_hurtbox_damage_taken(damage) -> void:
 
 func _on_attack_range() -> void:
 	out_of_attack_range = false
+	character.stop_moving()
 	previous_state = current_state
 	current_state = State.ATTACKING
 
