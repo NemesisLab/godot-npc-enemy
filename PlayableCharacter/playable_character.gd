@@ -7,6 +7,8 @@ signal died
 @onready var health_component: HealthComponent = $HealthComponent
 
 enum State {IDLE, RUNNING, HURT, ATTACKING, DYING, DEAD}
+var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
+var SPEED = 200.0
 var current_state: State = State.IDLE
 var previous_state: State = State.IDLE
 var selected_target
@@ -35,16 +37,27 @@ func _process(delta: float) -> void:
 			play_death()
 
 func get_direction_input():
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = input_direction * speed
+	if Input.is_action_pressed("attack"):
+		play_basic_attack()
+	
+	if Input.is_action_pressed("up"):
+		velocity.y = -250.0
+	
+	var input_direction = Input.get_axis("left", "right")
+	
+	if input_direction:
+		velocity.x = input_direction * speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+	
 	move_and_slide()
 
 func _physics_process(delta):
 	if is_dead():
 		return
-		
-	if Input.is_action_pressed("attack"):
-		play_basic_attack()
+	
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
 	
 	get_direction_input()
 

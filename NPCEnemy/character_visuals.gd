@@ -2,6 +2,15 @@ class_name NPCEnemy extends CharacterBody2D
 
 signal dead
 
+var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
+var SPEED = 200.0
+
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+	
+	move_and_slide()
+
 func chase_enemy(enemy):
 	if !enemy:
 		return
@@ -9,9 +18,8 @@ func chase_enemy(enemy):
 	var enemy_position = enemy.global_position
 	face_enemy(enemy_position)
 	play_run()
-	var direction = global_position.direction_to(enemy_position)
-	velocity = direction * 200.0
-	move_and_slide()
+	var direction = global_position.direction_to(Vector2(enemy_position.x, global_position.y))
+	velocity = direction * SPEED
 
 func play_basic_attack(enemy):
 	if !enemy:
@@ -24,8 +32,11 @@ func play_basic_attack(enemy):
 	%AnimationPlayer2.play("basic_attack")
 
 func face_enemy(enemy_position):
-	%AnimationPlayer.flip_h = enemy_position.x < 0
-	%Sprite2D.flip_h = enemy_position.x < 0
+	%AnimationPlayer.flip_h = to_local(enemy_position).x < 0
+	%Sprite2D.flip_h = to_local(enemy_position).x < 0
+
+func stop_moving():
+	velocity.x = 0
 
 func play_idle():
 	switch_to_general_animation()

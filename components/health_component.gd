@@ -13,5 +13,5 @@ func take_damage(damage) -> void:
 	if health <= 0:
 		died.emit()
 
-func _on_damage_taken(damage):
+func _on_health_damage_taken(damage):
 	take_damage(damage)

@@ -1,13 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbca807lncvdt"]
+[gd_scene load_steps=4 format=3 uid="uid://dbca807lncvdt"]
 
 [ext_resource type="PackedScene" uid="uid://cxtsndussnvpj" path="res://NPCEnemy/npc_enemy.tscn" id="1_l2m72"]
 [ext_resource type="PackedScene" uid="uid://dng36kjbavatw" path="res://PlayableCharacter/playable_character.tscn" id="2_l2m72"]
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_l2m72"]
+distance = 6.0
+
 [node name="Pit" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(12, -131)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-2, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -1)
+shape = SubResource("WorldBoundaryShape2D_l2m72")
 
 [node name="NPCEnemy" parent="." instance=ExtResource("1_l2m72")]
+position = Vector2(-1, -76)
 
 [node name="PlayerVisuals" parent="." instance=ExtResource("2_l2m72")]
 position = Vector2(-274, -20)

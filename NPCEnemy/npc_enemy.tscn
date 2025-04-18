@@ -431,6 +431,3 @@ metadata/_custom_type_script = "uid://1ldrn1ukxl2d"
 [node name="ControllerComponent" type="Node" parent="."]
 script = ExtResource("12_3cgmm")
 metadata/_custom_type_script = "uid://b2xk7p0qjlqco"
-
-[connection signal="body_entered" from="DetectionArea" to="DetectionArea" method="_on_body_entered"]
-[connection signal="damage_taken" from="HurtBoxComponent" to="HealthComponent" method="_on_damage_taken"]
