@@ -70,6 +70,8 @@ func _on_detected_body(character_detected: CharacterBody2D) -> void:
 
 func _on_detected_body_exited() -> void:
 	out_of_detection_range = true
+	selected_target = null
+	character.stop_moving()
 	current_state = State.IDLE
 
 func _on_death() -> void:

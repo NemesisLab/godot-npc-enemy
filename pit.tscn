@@ -19,7 +19,7 @@ position = Vector2(0, -1)
 shape = SubResource("WorldBoundaryShape2D_l2m72")
 
 [node name="NPCEnemy" parent="." instance=ExtResource("1_l2m72")]
-position = Vector2(-1, -76)
+position = Vector2(280, -38)
 
 [node name="PlayerVisuals" parent="." instance=ExtResource("2_l2m72")]
 position = Vector2(-274, -20)

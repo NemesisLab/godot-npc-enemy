@@ -315,7 +315,7 @@ tracks/3/path = NodePath("NPCEnemy/Sprite2D/HitBox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.299764, 0.499817),
+"times": PackedFloat32Array(0, 0.333333, 0.499817),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -390,6 +390,7 @@ position = Vector2(2, 2)
 rotation = 1.57075
 shape = SubResource("CapsuleShape2D_c1b4b")
 disabled = true
+debug_color = Color(0.998048, 0, 0.151823, 0.42)
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

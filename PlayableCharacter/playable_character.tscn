@@ -406,6 +406,3 @@ metadata/_custom_type_script = "uid://ddxcnl7aoxmfy"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer2" to="." method="_on_animation_attack_player_animation_finished"]
-[connection signal="died" from="HealthComponent" to="." method="_on_died"]
-[connection signal="damage_taken" from="HurtBoxComponent" to="." method="_on_playable_character_damage_taken"]
-[connection signal="damage_taken" from="HurtBoxComponent" to="HealthComponent" method="_on_playable_character_damage_taken"]

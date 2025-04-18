@@ -16,6 +16,8 @@ var basic_damage = 10
 
 func _ready() -> void:
 	hurt_box_component.damage_taken.connect(_on_playable_character_damage_taken)
+	hurt_box_component.damage_taken.connect(health_component._on_health_damage_taken)
+	health_component.died.connect(_on_died)
 
 func _process(delta: float) -> void:
 	if current_state == State.DEAD:
@@ -70,7 +72,6 @@ func is_dead():
 func _on_playable_character_damage_taken(damage) -> void:
 	previous_state = State.IDLE
 	current_state = State.HURT
-	health_component.take_damage(damage)
 
 func _on_died() -> void:
 	current_state = State.DYING
