@@ -10,7 +10,6 @@ class_name ControllerComponent
 
 enum State {IDLE, CHASING, HURT, ATTACKING, DYING, DEAD}
 var current_state: State = State.IDLE
-var previous_state: State = State.IDLE
 var selected_target
 var out_of_attack_range = true
 var out_of_detection_range = true
@@ -46,17 +45,22 @@ func _process(delta: float) -> void:
 		State.DEAD:
 			character_dead = true
 
+func evaluate_state():
+	if !out_of_attack_range:
+		current_state = State.ATTACKING
+	if out_of_attack_range && !out_of_detection_range:
+		current_state = State.CHASING
+	
+	if current_state == State.DYING:
+		current_state = State.DEAD
+
 func _on_hurtbox_damage_taken(damage) -> void:
 	character.stop_animation()
-	if current_state != State.HURT:
-		previous_state = current_state
-	
 	current_state = State.HURT
 
 func _on_attack_range() -> void:
 	out_of_attack_range = false
 	character.stop_moving()
-	previous_state = current_state
 	current_state = State.ATTACKING
 
 func _on_attack_out_of_range_range():
@@ -79,22 +83,8 @@ func _on_death() -> void:
 	current_state = State.DYING
 
 func _on_animation_player_animation_finished() -> void:
-	var anim_name = character.get_current_animation()
-	if current_state == State.HURT and anim_name == "hurt":
-		get_tree().create_timer(0.3).timeout.connect(func(): previous_state = State.IDLE)
-		if out_of_attack_range && !out_of_detection_range:
-			current_state = State.CHASING
-		if !out_of_attack_range:
-			current_state = State.ATTACKING
-	if current_state == State.DYING and anim_name == "death":
-		current_state = State.DEAD
+	evaluate_state()
 
 func _on_animation_player_2_animation_finished(anim_name: StringName) -> void:
-	previous_state = current_state
-	if out_of_attack_range && !out_of_detection_range:
-		current_state = State.CHASING
-	elif previous_state == State.ATTACKING:
-		current_state = State.IDLE
-		if selected_target:
-			get_tree().create_timer(0.5).timeout.connect(func(): current_state = State.ATTACKING)
+	evaluate_state()
 			
