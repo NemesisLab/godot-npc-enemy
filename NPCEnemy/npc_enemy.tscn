@@ -235,7 +235,7 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NPCEnemy/Sprite2D:hframes")
+tracks/0/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D:hframes")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -247,7 +247,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("NPCEnemy/Sprite2D:vframes")
+tracks/1/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -259,7 +259,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("NPCEnemy/Sprite2D:frame")
+tracks/2/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -275,7 +275,7 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NPCEnemy/Sprite2D:hframes")
+tracks/0/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D:hframes")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -287,7 +287,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("NPCEnemy/Sprite2D:vframes")
+tracks/1/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D:vframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -299,7 +299,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("NPCEnemy/Sprite2D:frame")
+tracks/2/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -311,7 +311,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("NPCEnemy/Sprite2D/HitBox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("NPCEnemy/BasicAttackRange/Sprite2D/HitBox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -367,34 +367,34 @@ value = 20.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="AttackRange" type="Area2D" parent="."]
+[node name="BasicAttackRange" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicAttackRange"]
 shape = SubResource("CircleShape2D_jb3kq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="BasicAttackRange"]
 unique_name_in_owner = true
 visible = false
 texture = ExtResource("6_xith2")
 hframes = 8
 frame = 7
 
-[node name="HitBox" type="Area2D" parent="Sprite2D"]
+[node name="HitBox" type="Area2D" parent="BasicAttackRange/Sprite2D"]
 collision_layer = 2
 collision_mask = 2
 script = SubResource("GDScript_7tnxx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicAttackRange/Sprite2D/HitBox"]
 position = Vector2(2, 2)
 rotation = 1.57075
 shape = SubResource("CapsuleShape2D_c1b4b")
 disabled = true
 debug_color = Color(0.998048, 0, 0.151823, 0.42)
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="BasicAttackRange"]
 unique_name_in_owner = true
-root_node = NodePath("../..")
+root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_stcs8")
 }
@@ -420,13 +420,13 @@ metadata/_custom_type_script = "uid://bv2alvqew8hli"
 [node name="HitBoxComponent" type="Node" parent="." node_paths=PackedStringArray("hit_box_area")]
 unique_name_in_owner = true
 script = ExtResource("10_1q88n")
-hit_box_area = NodePath("../Sprite2D/HitBox")
+hit_box_area = NodePath("../BasicAttackRange/Sprite2D/HitBox")
 metadata/_custom_type_script = "uid://ddxcnl7aoxmfy"
 
 [node name="AttackRangeComponent" type="Node" parent="." node_paths=PackedStringArray("attack_range_area")]
 unique_name_in_owner = true
 script = ExtResource("11_645qg")
-attack_range_area = NodePath("../AttackRange")
+attack_range_area = NodePath("../BasicAttackRange")
 metadata/_custom_type_script = "uid://1ldrn1ukxl2d"
 
 [node name="ControllerComponent" type="Node" parent="."]
