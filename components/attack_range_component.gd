@@ -13,7 +13,7 @@ func collision(hurtbox: Area2D) -> void:
 	if hurtbox == null or hurtbox.owner == self.owner or hurtbox.name != "HurtBox":
 		return
 	
-	attack_range.emit()
+	attack_range.emit(self.name)
 
 func out_of_range(hurtbox: Area2D) -> void:
 	if hurtbox == null or hurtbox.owner == self.owner or hurtbox.name != "HurtBox":

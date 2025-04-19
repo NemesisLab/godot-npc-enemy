@@ -6,11 +6,17 @@ class_name ControllerComponent
 @onready var hurt_box_component: HurtBoxComponent = %HurtBoxComponent
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var detection_area_component: DetectionAreaComponent = %DetectionAreaComponent
-@onready var attack_range_component: AttackRangeComponent = %AttackRangeComponent
+@onready var basic_attack_range_component: AttackRangeComponent = %BasicAttackRangeComponent
+@onready var secondary_attack_range_component: AttackRangeComponent = %SecondaryAttackRangeComponent
 
+const available_attacks = { 
+	"BasicAttackRangeComponent" : "basic_attack", 
+	"SecondaryAttackRangeComponent" : "secondary_attack"
+}
 enum State {IDLE, CHASING, HURT, ATTACKING, DYING, DEAD}
 var current_state: State = State.IDLE
 var selected_target
+var selected_attack
 var out_of_attack_range = true
 var out_of_detection_range = true
 var character_dead = false
@@ -18,8 +24,10 @@ var character_dead = false
 func _ready() -> void:
 	detection_area_component.detected_body.connect(_on_detected_body)
 	detection_area_component.body_exited.connect(_on_detected_body_exited)
-	attack_range_component.attack_range.connect(_on_attack_range)
-	attack_range_component.attack_out_of_range.connect(_on_attack_out_of_range_range)
+	basic_attack_range_component.attack_range.connect(_on_attack_range)
+	basic_attack_range_component.attack_out_of_range.connect(_on_attack_out_of_range_range)
+	secondary_attack_range_component.attack_range.connect(_on_attack_range)
+	secondary_attack_range_component.attack_out_of_range.connect(_on_attack_out_of_range_range)
 	hurt_box_component.damage_taken.connect(_on_hurtbox_damage_taken)
 	hurt_box_component.damage_taken.connect(health_component._on_health_damage_taken)
 	health_component.died.connect(_on_death)
@@ -38,7 +46,7 @@ func _process(delta: float) -> void:
 		State.HURT:
 			character.play_hurt()
 		State.ATTACKING:
-			character.play_basic_attack(selected_target)
+			character.play_attack(selected_attack, selected_target)
 		State.DYING:
 			character.play_death()
 			set_process(false)
@@ -58,9 +66,10 @@ func _on_hurtbox_damage_taken(damage) -> void:
 	character.stop_animation()
 	current_state = State.HURT
 
-func _on_attack_range() -> void:
+func _on_attack_range(attack_name) -> void:
 	out_of_attack_range = false
 	character.stop_moving()
+	selected_attack = available_attacks[attack_name]
 	current_state = State.ATTACKING
 
 func _on_attack_out_of_range_range():

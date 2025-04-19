@@ -209,9 +209,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="GDScript" id="GDScript_7tnxx"]
-script/source = "class_name Hitbox
-
-extends Area2D
+script/source = "extends Area2D
 
 func get_damage():
 	return 15
