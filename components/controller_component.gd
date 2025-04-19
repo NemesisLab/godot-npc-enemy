@@ -33,6 +33,7 @@ func _ready() -> void:
 	health_component.died.connect(_on_death)
 	%AnimationPlayer.animation_finished.connect(_on_animation_player_animation_finished)
 	%AnimationPlayer2.animation_finished.connect(_on_animation_player_2_animation_finished)
+	%AnimationPlayer3.animation_finished.connect(_on_animation_player_3_animation_finished)
 
 func _process(delta: float) -> void:
 	if character_dead:
@@ -56,6 +57,7 @@ func _process(delta: float) -> void:
 func evaluate_state():
 	if !out_of_attack_range:
 		current_state = State.ATTACKING
+	
 	if out_of_attack_range && !out_of_detection_range:
 		current_state = State.CHASING
 	
@@ -96,4 +98,6 @@ func _on_animation_player_animation_finished() -> void:
 
 func _on_animation_player_2_animation_finished(anim_name: StringName) -> void:
 	evaluate_state()
-			
+
+func _on_animation_player_3_animation_finished(anim_name: StringName) -> void:
+	evaluate_state()

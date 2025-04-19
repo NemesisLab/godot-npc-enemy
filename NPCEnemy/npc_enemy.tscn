@@ -567,7 +567,7 @@ script = ExtResource("9_a3ial")
 hurt_box_area = NodePath("../HurtBox")
 metadata/_custom_type_script = "uid://bv2alvqew8hli"
 
-[node name="HitBoxComponent" type="Node" parent="." node_paths=PackedStringArray("hit_box_area")]
+[node name="BasicAttackHitBoxComponent" type="Node" parent="." node_paths=PackedStringArray("hit_box_area")]
 unique_name_in_owner = true
 script = ExtResource("10_1q88n")
 hit_box_area = NodePath("../BasicAttackRange/BasicAttackSprite/HitBox")

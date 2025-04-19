@@ -5,6 +5,10 @@ signal dead
 @onready var basic_attack_sprite: Sprite2D = %BasicAttackSprite
 @onready var secondary_attack_sprite: Sprite2D = %SecondaryAttackSprite
 
+var attacks_list = {
+	"basic_attack": play_basic_attack, 
+	"secondary_attack": play_secondary_attack
+}
 var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
 var SPEED = 200.0
 var current_facing_direction
@@ -26,10 +30,7 @@ func chase_enemy(enemy):
 	velocity = direction * SPEED
 
 func play_attack(attack_name: String, enemy):
-	if attack_name == "basic_attack":
-		play_basic_attack(enemy)
-	if attack_name == "secondary_attack":
-		play_secondary_attack(enemy)
+	attacks_list[attack_name].call(enemy)
 
 func play_basic_attack(enemy):
 	if !enemy:
@@ -45,20 +46,20 @@ func play_secondary_attack(enemy):
 	if !enemy:
 		return
 	
-	if !%AnimationPlayer2.is_playing():
+	if !%AnimationPlayer3.is_playing():
 		face_enemy(enemy.global_position)
 	
 	switch_to_secondary_attack_animation()
-	%AnimationPlayer2.play("secondary_attack")
+	%AnimationPlayer3.play("secondary_attack")
 
 func face_enemy(enemy_position):
-	var enemy_relative_position = to_local(enemy_position).x < 0
+	var enemy_direction = to_local(enemy_position).x < 0
 	
-	if current_facing_direction == enemy_relative_position:
+	if current_facing_direction == enemy_direction:
 		return
 	
-	current_facing_direction = enemy_relative_position
-	%AnimationPlayer.flip_h = enemy_relative_position
+	current_facing_direction = enemy_direction
+	%AnimationPlayer.flip_h = enemy_direction
 	basic_attack_sprite.scale.x *= -1
 	secondary_attack_sprite.scale.x *= -1
 
